@@ -1,0 +1,17 @@
+sw883 - Shuyu Wang - CS2110 - HW1
+
+1. write the algorithm for executing the Java assignment statement
+step1. evaluate the <expression>
+step2. store its value in the <variable>
+
+2. write the algorithm for executing the Java if-statement
+step1. evaluate the <boolean-expression>
+step2. if <boolean-expression> is true, jump to step 3
+step3. execute the <statement1>
+
+3. write the algorithm for executing the Java if-else-statement
+step1. evaluate the <boolean-expression>
+step2. if <boolean-expression> is true, execute the <statement1>; otherwise execute the <statement2>
+
+4. Tell us in a few words what you thought of the two videos, their message, and the homework
+The video tells the most basic logic for executing the command in Java, and the officially way to describe the algorithm.

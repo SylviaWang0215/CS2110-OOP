@@ -1,0 +1,32 @@
+REC3: loop-invariant problems
+1.
+	(1) Does it start right?  Is {Q} init {P} true?
+	(2) Does it end right? Is P && !B => R true?
+	(3) Does the repetend make progress toward termination?
+	(4) Does the repetend maintain P: Is {P && B} S {P} true?
+ 
+2.
+	2A. init: int k = 0;
+	2B. init: int k = c.length - 2;
+	2C: init: int k = c.length - 1;
+
+3. 
+	3A. !B is k = c.length, so B: k != c.length
+	3B. !B is k = 0 , so B: int k != 0;
+	3C. !B is k + 1 = 0 so B: int k != 1;
+
+4.
+	4A. 
+		if (c[k] != 0)
+			b = false; // should I write break; ?
+		k = k + 1;
+	4B.
+		if (c[k-1] != 0) 
+			b = false;
+		k = k - 1;
+	4C.
+		s = s*c[k];
+		k = k - 1;
+
+5.
+	5A.	

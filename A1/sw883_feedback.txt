@@ -1,0 +1,200 @@
+﻿This is Mary, grading your A1. Below is the grading table. The grade for
+correctness comes by truncating (not rounding) the grade given by the grading
+program at the end of this file.
+After the grading table are my comments and then the output of the grading program.
+Please note that more points may be deducted in special cases, e.g. syntax errors
+cause your submission not to compile.
+
+Correctness, by grading program                        53 out of  55
+(a) Lines short enough, blanks before methods:         04 out of  05
+(b) Class invariant:                                   10 out of  10
+(c) Method names, parameters:                          05 out of  05
+(d) Specifications complete, used Javadoc comments:    10 out of  10
+(e) Assert statements --checked by grading program:
+(f) Checked javadoc:                                   04 out of  05
+(g) Testing methods:                                   06 out of  10
+Total:                                                 92 out of 100
+Deductions:
+Total:                                                 92 out of 100
+
+GENERAL FORMAT, CLASS INVARIANT, METHOD SPECIFICATIONS, JAVADOC
+
+1. Deduction 1. Horizontal scrolling is necessary. See point 1 of the CheckList.
+   
+2. Thanks for putting in the class invariant and method specifications so well. They help!
+
+3. Deduction 0.  Point 2 of the CheckList says to put in the full class invariant. 
+   You did not do this.
+   You are missing a constraint on the year--could the year be 0, for example?
+
+4. Deduction 1. You neglected to tell us in a comment that you checked the Javadoc, as
+   required in point 6 of the Checklist.
+
+
+COMMENTS ON AREPHDSIBLINGS
+1. Deduction by grading program. The spec we gave of arePhDSiblings says to return false
+   if p is null. Your function gave a null-pointer exception or an assert exception
+   when p was null.
+
+2. Deduction by grading program. In arePhDSiblings, you neglected the case that the two
+    are the same, e.g. there could be a call p.arePhDSiblings(p). The handout defined
+    sibling for you, saying, "... see whether two people are “intellectual siblings”
+    (that means that they are not the same object and they have a non-null advisor in common).
+
+
+
+JUNIT TESTING
+1. Deduction 1. You did not test that all 7 fields were set properly by the second
+    constructor and third constructor. In particular, you missed testing that they set
+    advisees correctly for the newly created PHDs. 
+
+2. Deduction 2. You do not have enough test cases for gotBefore. You should test dates like
+    2000 Jan and 2000 Jan, 2000 Jan and 2000 April, 2000 April and 2000 Jan, 1995 April and
+    2000 Jan, 2000 Jan and 1995 April.
+
+3. Deduction 1. In testing arePhDSiblings, you missed a case or two. You should be testing
+    2 phds whose first advisors are the same, 2 phds whose second advisors are the same,
+    2 PhDs where one's first advisor and the other's second advisor are the same, etc.
+
+4. Deduction by grading program. In testing arePhDSiblings, you neglected the
+    case p.arePhDSiblings(p).
+
+
+INDENTATION, PARENTHESES, ONE-CHAR FIELD NAMES, "THIS.", "{" and "}"
+
+1. Deduction 0. You use "this.” too much. It’s unnecessary, useless
+    noise, cluttering up the program. Keep things as simple as possible.
+
+2. Deduction 0.You wrote:
+	public boolean isMale(){
+		if (gender == 'm'){
+			return true;
+		}
+		return false;
+	}
+
+    Instead of using an if-statement, why not just return gender=='m' ?
+
+
+
+
+
+
+Executing Testing Method test01Constructor1
+Testing Constructor 1: getName() .
+Testing Constructor 1: isMale() .
+Testing Constructor 1: getYear() .
+Testing Constructor 1: getMonth() .
+Testing Constructor 1: advisor1() .
+Testing Constructor 1: advisor2() .
+Testing Constructor 1: numAdvises() .
+Testing Constructor 1: numAdvises() of parent .
+Passed 8.00 out of 8.00 tests
+Test method test01Constructor1 score: 6.00 out of 6.00
+
+Executing Testing Method test04Setters
+Testing Testing setAdvisor1: advisor1(). 
+Testing Testing setAdvisor1: numAdvises(). 
+Testing Testing setAdvisor1: advisor1.advisor1(). 
+Testing Testing setAdvisor1: advisor1.numAdvisees(). 
+Testing Testing setAdvisor1: advisor1.numAdvises(). 
+Testing Testing setAdvisor2: advisor2(). 
+Testing Testing setAdvisor2: numAdvises(). 
+Testing Testing setAdvisor2: advisor2.advisor2. 
+Testing Testing setAdvisor2: advisor2.numAdvises(). 
+Testing Testing setAdvisor2:  advisor2.numAdvises(). 
+Passed 10.00 out of 10.00 tests
+Test method test04Setters score: 16.00 out of 16.00
+
+Executing Testing Method test07Constructor2
+Testing Constructor 2: getName(). 
+Testing Constructor 2: isMale(). 
+Testing Constructor 2: getYear(). 
+Testing Constructor 2: getMonth(). 
+Testing Constructor 2: advisor1(). 
+Testing Constructor 2: advisor2(). 
+Testing Constructor 2: numAdvises(). 
+Testing Constructor 2: advisor1.numAdvises(). 
+Testing Constructor 2: advisor1.numAdvises(). 
+Passed 9.00 out of 9.00 tests
+Test method test07Constructor2 score: 7.00 out of 7.00
+
+Executing Testing Method test10Constructor3
+Testing Constructor 3: getName(). 
+Testing Constructor 3: isFemale(). 
+Testing Constructor 3: getYear(). 
+Testing Constructor 3: getMonth(). 
+Testing Constructor 3: advisor1(). 
+Testing Constructor 3: advisor2(). 
+Testing Constructor 3: numAdvises(). 
+Testing Constructor 3: advisor1.numAdvises(). 
+Testing Constructor 3: advisor2.numAdvises(). 
+Testing Constructor 3: advisor1.numAdvises(). 
+Testing Constructor 3: advisor2.numAdvises(). 
+Passed 11.00 out of 11.00 tests
+Test method test10Constructor3 score: 7.00 out of 7.00
+
+Executing Testing Method test13gotBefore
+Testing same year. 
+Testing same year, this month before p's. 
+Testing same year, this month after p's. 
+Testing this year before, same month. 
+Testing this year before, this month before. 
+Testing this year before, this month after. 
+Testing this year after, same month. 
+Testing this year after, this month after. 
+Testing this year after, this month before. 
+Passed 9.00 out of 9.00 tests
+Test method test13gotBefore score: 7.00 out of 7.00
+
+Executing Testing Method test16arePHDSiblings
+Testing this.arePHDSiblings(null). 
+    Execution resulted in uncaught throwable java.lang.AssertionError
+Testing a1.arePHDSiblings(a1). 
+    Execution resulted in uncaught throwable java.lang.AssertionError
+Testing neither has an advisor. 
+Testing adv1 and adv1. 
+Testing adv1 and adv2. 
+Testing adv2 and adv1. 
+Testing adv2 and adv2. 
+Testing both have advisors, none in common. 
+Passed 6.00 out of 8.00 tests
+Test method test16arePHDSiblings score: 5.25 out of 7.00
+
+Executing Testing Method test20Asserts
+Testing Test constructor 1 with null name.
+Testing Test constructor 1 with name "". 
+Testing Test constructor 1 with month < 1. 
+Testing Test constructor 1 with 12 < month. 
+Testing Test constructor 1 with gender 'M'. 
+Testing Test constructor 1 with gender 'F'. 
+Testing Test advisor1(null). 
+Testing Test advisor1() with non-null advisor1. 
+Testing Test advisor2() with advisor1 null.
+Testing Test advisor2() with advisor2 not null.
+Testing Test advisor2(null). 
+Testing Test advisor2(p) with p == advisor1. 
+Testing Test constructor 2 with null name. 
+Testing Test constructor 2 with name "". 
+Testing Test constructor 2 with month < 1. 
+Testing Test constructor 2 with 12 < month. 
+Testing Test constructor 2 with gender 'M'. 
+Testing Test constructor 2 with gender 'F'. 
+Testing Test constructor 2 with adv1 null. 
+Testing Test constructor 3 with null name. 
+Testing Test constructor 3 with name "". 
+Testing Test constructor 3 with month < 1. 
+Testing Test constructor 3 with 12 < month. 
+Testing Test constructor 3 with gender 'M'. 
+Testing Test constructor 3 with gender 'F'. 
+Testing Test constructor 3 with adv1 null. 
+Testing Test constructor 3 with adv2 null. 
+Testing Test constructor 3 with adv1 = adv2. 
+Testing Test gotBefore(null). 
+Passed 29.00 out of 29.00 tests
+Test method test20Asserts score: 5.00 out of 5.00
+
+Total Score: 53.25 out of 55.00
+
+
+Overall, really well done! Keep up the good work :D
