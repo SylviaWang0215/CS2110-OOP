@@ -1,0 +1,144 @@
+/** Examples of recursive methods. */
+public class D2 {
+
+    /** Return the shortest substring x of s such that s = x + x + ⋯ + x.
+     * Examples: For s = "" return ""
+     *           For s = "xxxxxxxxx" return "x"
+     *           For s = "xyxyxyxy" return "xy"
+     *           For s = "hellohellohello" return "hello"
+     *           For s = "hellohelloworld" return "hellohelloworld"
+     *           For s = "hellohel" return "hellohel"
+     */
+    public static String deduplicate(String s) {
+        // invariant: no substring x exists with x.length() < k
+        for (int k= 1; k < s.length(); k= k+1) {
+            String x= s.substring(0, k);
+            // Return x if s = x + x + ... x
+            if (sIsCatX(s, x)) return x;
+        }
+        return s;
+    }
+
+    /** = "s is formed by catenating x 1 or more times."
+     * Precondition: x.length() > 0. */
+    public static boolean sIsCatX(String s, String x) {
+        int n= x.length();
+        if (s.length() < n) {
+          return false;
+        }
+        if (!(x.equals(s.substring(0, n)))) {
+          return false;
+        }
+        return s.length() == n || sIsCatX(s.substring(n), x);
+    }
+    
+    
+    /*  The algorithms given below to calculate b^n use the binary representation
+     *  of n in the following way. Consider
+     *     2^4   = 16: in binary:  1000
+     *     2^4-1 = 15: in binary:   111
+     * 
+     *  A recursive call look at the last bit of n
+     *  If that bit is 0, n is even, and the next recursive call uses
+     *     n/2 --that's n with the last bit thrown away.
+     *  If that bit is 1, n is odd, and the next receursive call uses
+     *     n-1  --that's n with its last bit changed from 1 to 0.
+     *  So, the number of recursive calls is at most 2 times the
+     *     number of bits needed to represent n in binary.
+     */
+
+    /** = b^n. Precondition n >= 0.
+   Properties: b^0 = 1.
+   b^n = b*b^(n-1)  for n > 0. */
+    public static double expSlow(double b, int n) {
+      if (n == 0) {
+        return 1;
+      }
+      return b * expSlow(b, n-1);
+    }
+
+    /** = b^n. Precondition n >= 0.
+     Properties: b^0 = 1.
+     b^n = b*b^(n-1)  for c > 0.
+     b^n = (b*b)^(n/2) for even n. 
+     3*8 = 3*3*3*3*3*3*3*3 =  (3*3) * (3*3) * (3*3) * (3*3)  = (3*3)^4*/
+    public static double expFast(double b, int n) {
+        if (n == 0)
+          return 1;
+        if (n % 2 == 0)
+          return expFast(b*b, n/2);
+        return expFast(b, n - 1)*b;
+    }
+
+    // The following two methods produce a pair
+    // (value of b^c, number of calls made to produce the value)
+    // They use class PairDi to aggregate the two values into an object.
+    // We could say that the object wraps the two values.
+
+    /** =  the pair (b^n, no. of calls made).
+          Precondition: n ≥ 0.
+          Property: b^c = b * b^(n-1) */
+    public static PairDI exp1Slow(double b, int n) {
+        if (n == 0) return new PairDI(1.0, 1);
+
+        // c > 0
+        PairDI p= exp1Slow(b, n-1);
+        return new PairDI(b * p.d, p.i+1);
+    }
+
+    /** =  the pair (b^n, no. of calls made).
+          Precondition: n ≥ 0*/
+    public static PairDI exp1Fast(double b, int n) {
+        if (n == 0) return new PairDI(1.0, 1);
+
+        // n > 0
+        if (n % 2 == 0) {
+            PairDI p= exp1Fast(b*b, n/2);
+            return new PairDI(p.d, p.i+1);
+        }
+
+        // n is odd
+        PairDI p= exp1Fast(b, n-1);
+        return new PairDI(b * p.d, p.i+1);
+    }
+
+    /** print how big the call-stack can get, using exp1Slow 
+     * Then print how big the call stack is for ex1Fast. */
+    public static void main(String[] args) {
+        int k= 1;
+        double a= 0;
+        try {
+            while (true) {
+                a= expSlow(.9999, k);
+                k= 2*k;
+            }
+
+        } catch (StackOverflowError re) {
+        }
+        System.out.println("expSlow(.9999, " + k + " overflowed the call stack.");
+        System.out.println("expSlow(.9999, " + (k/2) + " was " + a);
+        PairDI fast= exp1Fast(.9999, k/2);
+        System.out.println("exp1Fast(.9999, " + (k/2) + " was " + fast.d +
+                ". Recursion depth: " + fast.i );
+        fast= exp1Fast(.9999, k);
+        System.out.println("exp1Fast(.9999, " + (k) + " was " + fast.d +
+                ". Recursion depth: " + fast.i );
+
+        fast= exp1Fast(.9999, k-1);
+        System.out.println("exp1Fast(.9999, " + (k-1) + " was " + fast.d +
+                ". Recursion depth: " + fast.i );
+    }
+}
+
+/** store a pair of values, one double and one int */
+class PairDI {
+  public double d;
+  public int i;
+  
+  public PairDI(double dd, int ii) {
+    d = dd;
+    i = ii;
+  }
+}
+  
+
