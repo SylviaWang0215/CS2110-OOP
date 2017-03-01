@@ -14,7 +14,6 @@ public class TimeTest {
 		}
 		catch (Exception e){
 			int y = 5;
-			int z = 1;
 			y = y / 1;
 			System.out.println("finish catch");
 		}

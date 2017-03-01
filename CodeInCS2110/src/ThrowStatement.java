@@ -69,6 +69,7 @@ public class ThrowStatement {
 		}
 		System.out.println("two");
 		y = 4/x;
+		System.out.println(y);
 		System.out.println("one");
 		return 1/x;
 	}
@@ -110,7 +111,7 @@ public class ThrowStatement {
 		System.out.println("3");
 		try{
 			int b = 5/p;
-			System.out.println("4");
+			System.out.println(b);
 			if(p == 6) throw new Exception();
 			System.out.println("5");
 		}catch(ArithmeticException e){
