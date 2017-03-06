@@ -17,6 +17,7 @@ public class CLLTest {
 	@Test
 	public void testAppend() {
 		CLL<Integer> c = new CLL<Integer>();
+		
 		c.append(5);
 		assertEquals("[5]", c.toString());
 		assertEquals("[5]", c.toStringRev());

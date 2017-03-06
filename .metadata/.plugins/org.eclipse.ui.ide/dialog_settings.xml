@@ -3,4 +3,7 @@
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
 		<item value="/Users/mac/Documents/Cornell/2110"/>
 	</list>
+	<section name="org.eclipse.ui.internal.ide.dialogs.ProjectContentsLocationArea">
+		<item value="/Users/mac/Documents/Cornell/2110/A2" key="OUTSIDE_LOCATION"/>
+	</section>
 </section>
