@@ -139,17 +139,17 @@ public class BugTree {
     	BugTree temp_tree = this.getTree(p);
     	BugTree new_tree = new BugTree(c);
     	temp_tree.children.add(new_tree);
-    	return new_tree;
+    	return null;
+    	
+    
     }
 
     /** Return the number of humans in this BugTree.
      * Note: If this is a leaf, the size is 1 (just the root) */
     public int size() {
         //TODO 2
-    	if (this.numberOfChildren() == 0)
-    		return 1;
-    	else
-    		return 1 + this.children.size();
+
+        throw new UnsupportedOperationException();
     }
 
     /*** Return the depth at which p occurs in this BugTree, or -1

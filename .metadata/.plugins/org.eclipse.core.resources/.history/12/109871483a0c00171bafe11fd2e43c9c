@@ -6,7 +6,7 @@ public class A4Test {
 
 	@Test
 	public void testSize() {
-		
+		fail("Not yet implemented");
 	}
 
 }

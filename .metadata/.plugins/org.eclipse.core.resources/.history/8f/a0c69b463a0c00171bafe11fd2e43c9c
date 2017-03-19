@@ -5,8 +5,8 @@ import org.junit.Test;
 public class A4Test {
 
 	@Test
-	public void testSize() {
-		
+	public void test() {
+		fail("Not yet implemented");
 	}
 
 }
