@@ -148,8 +148,13 @@ public class BugTree {
         //TODO 2
     	if (this.numberOfChildren() == 0)
     		return 1;
-    	else
-    		return 1 + this.children.size();
+    	
+    	int count = 1;
+    	for (BugTree dt: this.children){
+    		count = count + dt.size();
+    	}
+    	
+    	return count;
     }
 
     /*** Return the depth at which p occurs in this BugTree, or -1
@@ -164,8 +169,17 @@ public class BugTree {
         // the answer, thus terminating execution of the method.
         // If checking each child recursively doesn't find that p is in the tree,
         // return -1 at the end of the method.
-        
-        throw new UnsupportedOperationException();
+    	if (this.children == null)
+    		return -1;
+    	if (this.root == p)
+    		return 0;
+        for (BugTree dt: this.children){
+        	if(dt.root == p)
+        		return 1;
+        	else
+        		return 1 + dt.depthOf(p);
+        }        
+        return -1;
     }
 
     /** Return true iff this BugTree contains p. */
@@ -211,8 +225,15 @@ public class BugTree {
         //TODO 4
         // Hint: Use this recursive definition. If d = 0, the answer is 1.
         // If d > 0, the answer is: sum of widths of the children at depth d-1.
-        
-        throw new UnsupportedOperationException();
+       if (d < 0)
+    	   throw new IllegalArgumentException();
+       if (d == 0)
+    	   return 1;
+       int count = 0;
+       for (BugTree dt: this.children){
+    	   return count = count + dt.widthAtDepth(d - 1);
+       }
+       return 0;
     }
 
     /** Return the maximum width of all the widths in this tree, i.e. the
@@ -314,8 +335,16 @@ public class BugTree {
         // LinkedList<Human> is preferred to ArrayList<Human>, because
         // prepend (or its equivalent) may have to be used.
         // Base Case: The root of this BugTree is c. Route is just [c].
+        List<Human> lis = new LinkedList<Human>();
+        if (!this.contains(c))
+        	return null;
         
-        throw new UnsupportedOperationException();
+        if (this.root == c){
+        	lis.add(c);
+        	return lis;
+        }
+        
+        return lis;
     }
 
     /** Return the immediate parent of c (null if c is not in this BugTree).
