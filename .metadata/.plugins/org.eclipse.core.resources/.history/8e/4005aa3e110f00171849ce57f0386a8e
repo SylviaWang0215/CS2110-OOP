@@ -343,10 +343,6 @@ public class BugTree {
         	lis.add(c);
         	return lis;
         }
-        else{
-        	for (BugTree dt: this.children)
-        		dt.bugRouteTo(c);
-        }
         
         return lis;
     }
