@@ -178,12 +178,39 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
 
         g2d.drawImage(img, 0, 0, null);
 
+
         // TODO: #16. Implement me!
         // If the active tool is the LINE and one point has been pressed,
         // Draw the line on g2d using the foreColor and toolSize.
-         
         
         
+        //
+        //g2d.setStroke(new BasicStroke(toolSize));
+        g2d.setColor(foreColor);
+        //Point2D.Double endPoint = new Point2D.Double(mousePos.getX(), mousePos.getY());
+        //Shape lin = new Line2D.Double(linePoint.getX(), linePoint.getY(), mousePos.getX(), mousePos.getY());
+    	//g2d.drawLine((int) linePoint.getX(), (int) linePoint.getY(), (int) endPoint.getX(), (int) endPoint.getY());
+    	//g2d.draw(lin);
+    	
+    	//Shape lin = new Line2D.Double(mousePosPrev.getX(), mousePosPrev.getY(), mousePos.getX(), mousePos.getY());
+    	g2d.setStroke(new BasicStroke(toolSize));
+    	//g2d.draw(lin);
+    	//g2d.fill(lin);
+        /*
+        if (activeTool == Tool.LINE && pointGiven){
+        	g2d.setColor(foreColor);
+        	Shape lin = new Line2D.Double(linePoint.getX(), linePoint.getY(), endPoint.getX(), endPoint.getY());
+        	//g2d.drawLine((int) linePoint.getX(), (int) linePoint.getY(), (int) endPoint.getX(), (int) endPoint.getY());
+        	g2d.draw(lin);
+        	//g2d.fill(lin);
+        }
+        
+        else if(activeTool == Tool.CIRCLE && centerGiven){
+        	double distance = Math.sqrt((center.getX() - endPoint.getX())*(center.getX() - endPoint.getX()) + 
+        			(center.getY() - endPoint.getY())*(center.getY() - endPoint.getY()));
+        	//g2d.drawOval((int) (center.getX() - distance), (int) (center.getY() - distance), (int) (distance*2), (int) (distance*2));
+        } */
+        //setVisible(true);
         // TODO: 18. Implement me!
         // If the active tool is the Circle and one point has been pressed,
         // draw the circle on g2d using the foreColor and toolSize.
@@ -263,7 +290,7 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
         // TODO Gries 17. Implement me!
         // If the active tool is the Line or Circle and one mouse press
         // has been recognized, then repaint().
-       if (centerGiven || pointGiven)
+       if ((centerGiven && activeTool == Tool.CIRCLE) || (pointGiven && activeTool == Tool.LINE))
     	   repaint();
         
     }
@@ -284,6 +311,7 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             // foreground color. Its center should be at the position of the mouse.
             g2d.fillRect((int) (e.getX() - half), (int) (e.getY() - half), toolSize, toolSize);
             g2d.setColor(foreColor);
+            repaint();
 
 
         }
@@ -312,13 +340,25 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             // this IS the first mouse press; record it.
             // If one has already been made, this is the second mouse press;
             // draw the line.
-            if (!pointGiven)
+            if (pointGiven == false){
+            	System.out.println(Boolean.toString(pointGiven));
             	linePoint = new Point2D.Double(e.getX() - half, e.getY() - half);
-            else{
-            	Point2D.Double endPoint = new Point2D.Double(e.getX(), e.getY());
-            	g2d.drawLine((int) linePoint.getX(), (int) linePoint.getY(), (int) endPoint.getX(), (int) endPoint.getY());
             }
-
+            else{
+            	System.out.println(Boolean.toString(pointGiven));
+            	System.out.println(e.getX());
+            	System.out.println(e.getY());
+            	System.out.println(linePoint.getX());
+            	Point2D.Double endPoint = new Point2D.Double(e.getX() - half, e.getY() - half);
+            	//g2d.drawLine((int) linePoint.getX(), (int) linePoint.getY(), (int) endPoint.getX(), (int) endPoint.getY());
+            	Shape lin = new Line2D.Double(endPoint.getX(), endPoint.getY(), linePoint.getX(), linePoint.getY());
+            	g2d.setStroke(new BasicStroke(toolSize));
+            	g2d.draw(lin);
+            	g2d.fill(lin);
+            	System.out.println("finish line!");
+            }               
+            pointGiven = !pointGiven;
+            
 
         }
         else if (activeTool == Tool.CIRCLE){
@@ -337,6 +377,7 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             			(center.getY() - endPoint.getY())*(center.getY() - endPoint.getY()));
             	g2d.drawOval((int) (center.getX() - radius), (int) (center.getY() - radius), (int) (2*radius), (int) (2*radius));
             }
+            centerGiven = !centerGiven;
             
         }
         else if (activeTool == Tool.AIRBRUSH) {
@@ -355,6 +396,7 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
 
         // set prevMousePos
         mousePosPrev= mousePos;
+        //repaint();
     }
 
 
@@ -381,20 +423,43 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             // TODO: #12 Implement me!
             // Draw a line with color foreColor and stroke toolSize from
             // mouse position mousePosPrev to position mousePos.
+        	g2d.setColor(foreColor);
             if (mousePosPrev == null){
             	g2d.fillRect((int) (e.getX() - half), (int) (e.getY() - half), toolSize, toolSize);
             }
             else{
-            	//Path2D.Double geom = createPolygon(mousePosPrev, mousePos, half);
-            }
-            
+            	//g2d.fillRect((int) (e.getX() - mousePosPrev.getX()), (int) (e.getY() - mousePosPrev.getY()), toolSize, toolSize);
+                //g2d.setColor(foreColor);
+            	//Shape rect = new Rectangle2D.Double((int)(e.getX()), (int) (e.getY()), toolSize, toolSize);
+            	//g2d.draw(rect);
+            	//g2d.fill(rect);
+            	
+            	Shape lin = new Line2D.Double(mousePosPrev.getX(), mousePosPrev.getY(), mousePos.getX(), mousePos.getY());
+            	g2d.setStroke(new BasicStroke(toolSize));
+            	g2d.draw(lin);
+            	g2d.fill(lin);
+            }  
             
         }
         else if (activeTool == Tool.ERASER) {
             // TODO: GRIES #13 Implement me
             // Draw a line with color backColor and stroke toolSize from
             // mouse position mousePosPrev to position mousePos.
-
+        	g2d.setColor(backColor);
+            if (mousePosPrev == null){
+            	g2d.fillRect((int) (e.getX() - half), (int) (e.getY() - half), toolSize, toolSize);
+            }
+            else{
+            	//g2d.fillRect((int) (e.getX() - mousePosPrev.getX()), (int) (e.getY() - mousePosPrev.getY()), toolSize, toolSize);
+                //g2d.setColor(foreColor);
+            	//Shape rect = new Rectangle2D.Double((int)(e.getX()), (int) (e.getY()), toolSize, toolSize);
+            	//g2d.draw(rect);
+            	//g2d.fill(rect);
+            	Shape lin = new Line2D.Double(mousePosPrev.getX(), mousePosPrev.getY(), mousePos.getX(), mousePos.getY());
+            	g2d.setStroke(new BasicStroke(toolSize));
+            	g2d.draw(lin);
+            	g2d.fill(lin);
+            }  
             
         }
         else if (activeTool == Tool.COLOR_PICKER) {
@@ -404,7 +469,23 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             // TODO: #14 Implement me!
             // Airbrush with the current foreground color in an area of size
             // (toolSize x toolSize) centered at the current position of the mouse.
+        	g2d.setColor(foreColor);
+            int area = toolSize * toolSize;
+            int numPx = (int) Math.ceil(area * .15);
+            int x = e.getX();
+            int y = e.getY();
+            int radius = (int)Math.ceil(half);
             
+            int i = 0;
+            while (i < numPx){
+            	int x1 = x + gen.nextInt() % toolSize;
+                int y1 = y + gen.nextInt() % toolSize;
+                
+                if (Math.sqrt((x - x1)*(x- x1) + (y - y1)*(y - y1)) <= radius) {
+                  g2d.fillRect(x1, y1, 1, 1);
+                  i++;
+                }
+            }
             
         }
         else {
@@ -413,6 +494,7 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
 
         // update prevMousePos
         mousePosPrev= mousePos;
+        repaint();
     }
 
     /** Pick the color of the pixel of img given by e. 
