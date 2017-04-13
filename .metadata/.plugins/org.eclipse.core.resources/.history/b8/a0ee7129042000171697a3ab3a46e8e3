@@ -345,12 +345,14 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             	linePoint = new Point2D.Double(e.getX() - half, e.getY() - half);
             }
             else{
-            	
+            	System.out.println(Boolean.toString(pointGiven));
+            	System.out.println(e.getX());
+            	System.out.println(e.getY());
+            	System.out.println(linePoint.getX());
             	Point2D.Double endPoint = new Point2D.Double(e.getX() - half, e.getY() - half);
             	//g2d.drawLine((int) linePoint.getX(), (int) linePoint.getY(), (int) endPoint.getX(), (int) endPoint.getY());
             	Shape lin = new Line2D.Double(endPoint.getX(), endPoint.getY(), linePoint.getX(), linePoint.getY());
             	g2d.setStroke(new BasicStroke(toolSize));
-            	g2d.setColor(foreColor);
             	g2d.draw(lin);
             	g2d.fill(lin);
             	System.out.println("finish line!");
@@ -370,8 +372,6 @@ public class DrawingCanvas extends JPanel implements MouseListener, MouseMotionL
             if (!centerGiven)
             	center = new Point2D.Double(e.getX(), e.getY());
             else{
-            	g2d.setColor(foreColor);
-            	g2d.setStroke(new BasicStroke(toolSize));
             	Point2D.Double endPoint = new Point2D.Double(e.getX(), e.getY());
             	double radius = Math.sqrt((center.getX() - endPoint.getX())*(center.getX() - endPoint.getX())+
             			(center.getY() - endPoint.getY())*(center.getY() - endPoint.getY()));
