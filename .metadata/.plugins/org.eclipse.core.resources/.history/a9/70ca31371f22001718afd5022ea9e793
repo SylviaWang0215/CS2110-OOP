@@ -78,9 +78,9 @@ public class Heap<V> {
     	//if(c.length > this.size)
     	this.fixSpace();
     	//System.out.println(size);
-    	c[size] = new_info;    	 
-    	valPos.put(v, (int) size);   	
-    	size++;
+    	c[size] = new_info;
+    	size++; 
+    	valPos.put(v, (int) p);   	  	    	    	
     	bubbleUp(size - 1);
     	
     	
