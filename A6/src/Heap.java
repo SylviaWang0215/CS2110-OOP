@@ -160,7 +160,12 @@ public class Heap<V> {
         	parent = (k - 1)/2;
         	thispriority = c[k].priority;
         	parentpriority = c[parent].priority;
+<<<<<<< HEAD
         }
+=======
+
+
+>>>>>>> origin/master
     }
 
     /** Return the value of this heap with lowest priority. Do not
