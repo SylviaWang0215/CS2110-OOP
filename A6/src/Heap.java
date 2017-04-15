@@ -121,8 +121,28 @@ public class Heap<V> {
         // 
         // Read the A6 FAQs note about valPos.put(...).
         
-
-
+        V h_value = c[h].value;
+        V k_value = c[k].value;
+        
+        System.out.println(valPos.toString());
+        //System.out.println("old position: " + h + " " + k);
+        //System.out.println("before swap" + valPos.get(c[h].value) + " " + valPos.get(c[k].value));
+        Info temp = c[k];
+        c[k] = c[h];
+        c[h] = temp;
+        
+        
+        //System.out.println("new position: " + h + " " + k);
+        valPos.put(h_value, k);
+        valPos.put(k_value, h);
+        
+        //System.out.println("after swap" + valPos.get(c[h].value) + " " + valPos.get(c[k].value));
+        
+        //System.out.println(valPos.keySet());
+        //System.out.println(valPos.values());
+        
+        System.out.println(valPos.toString());
+        
     }
 
     /** Bubble c[k] up in heap to its right place.
