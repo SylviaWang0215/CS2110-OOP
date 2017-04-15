@@ -170,11 +170,8 @@ public class Heap<V> {
         // TODO 5: Do peek. This is an easy one. 
         //         test20Peek() will not find errors if this is correct.
 
-    	if (valPos.isEmpty())
-    		throw new NoSuchElementException("the heap is empty!");    	
-    	else
-    		return c[0].value;
-        //return null;
+        
+        return null;
     }
 
     /** Remove and return the element of this heap with lowest priority.

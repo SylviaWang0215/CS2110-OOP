@@ -174,7 +174,7 @@ public class Heap<V> {
     		throw new NoSuchElementException("the heap is empty!");    	
     	else
     		return c[0].value;
-        //return null;
+        return null;
     }
 
     /** Remove and return the element of this heap with lowest priority.

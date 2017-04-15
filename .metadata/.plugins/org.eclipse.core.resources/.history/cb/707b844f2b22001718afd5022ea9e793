@@ -171,10 +171,10 @@ public class Heap<V> {
         //         test20Peek() will not find errors if this is correct.
 
     	if (valPos.isEmpty())
-    		throw new NoSuchElementException("the heap is empty!");    	
-    	else
-    		return c[0].value;
-        //return null;
+    		throw new NoSuchElementException("the heap is empty!");
+    	
+    	return 
+        return null;
     }
 
     /** Remove and return the element of this heap with lowest priority.

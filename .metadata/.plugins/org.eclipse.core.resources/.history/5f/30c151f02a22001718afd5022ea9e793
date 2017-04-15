@@ -75,7 +75,7 @@ public class Heap<V> {
     	if (valPos.containsKey(v))
     		throw new IllegalArgumentException("v is already in priority queue");       	
     	Info new_info = new Info(v, p);
-
+    	//if(c.length > this.size)
     	this.fixSpace();
     	//System.out.println(size);
     	c[size] = new_info;    	 
@@ -124,6 +124,9 @@ public class Heap<V> {
         V h_value = c[h].value;
         V k_value = c[k].value;
         
+        System.out.println(valPos.toString());
+        //System.out.println("old position: " + h + " " + k);
+        //System.out.println("before swap" + valPos.get(c[h].value) + " " + valPos.get(c[k].value));
         Info temp = c[k];
         c[k] = c[h];
         c[h] = temp;
@@ -133,7 +136,12 @@ public class Heap<V> {
         valPos.put(h_value, k);
         valPos.put(k_value, h);
         
-        //System.out.println(valPos.toString());
+        //System.out.println("after swap" + valPos.get(c[h].value) + " " + valPos.get(c[k].value));
+        
+        //System.out.println(valPos.keySet());
+        //System.out.println(valPos.values());
+        
+        System.out.println(valPos.toString());
         
     }
 
@@ -148,19 +156,9 @@ public class Heap<V> {
         // If this method is written properly, testing procedure
         // test15Add_BubbleUp() will not find any errors.
         assert 0 <= k  && k < size;
-        double thispriority = c[k].priority;
-        
-        int parent = (k - 1)/2;
-        
-        double parentpriority = c[parent].priority;
-        
-        while(k > 0 && thispriority < parentpriority){
-        	swap(k, parent);  
-        	k = parent;
-        	parent = (k - 1)/2;
-        	thispriority = c[k].priority;
-        	parentpriority = c[parent].priority;
-        }
+
+
+
     }
 
     /** Return the value of this heap with lowest priority. Do not
@@ -170,11 +168,8 @@ public class Heap<V> {
         // TODO 5: Do peek. This is an easy one. 
         //         test20Peek() will not find errors if this is correct.
 
-    	if (valPos.isEmpty())
-    		throw new NoSuchElementException("the heap is empty!");    	
-    	else
-    		return c[0].value;
-        //return null;
+        
+        return null;
     }
 
     /** Remove and return the element of this heap with lowest priority.
