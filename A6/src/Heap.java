@@ -156,7 +156,18 @@ public class Heap<V> {
         // If this method is written properly, testing procedure
         // test15Add_BubbleUp() will not find any errors.
         assert 0 <= k  && k < size;
-
+        double thispriority = c[k].priority;
+        
+        int parent = (k - 1)/2;
+        
+        double parentpriority = c[parent].priority;
+        
+        while(k > 0 && thispriority < parentpriority){
+        	swap(k, parent);  
+        	k = parent;
+        	parent = (k - 1)/2;
+        	thispriority = c[k].priority;
+        	parentpriority = c[parent].priority;
 
 
     }
