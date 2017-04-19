@@ -1,4 +1,4 @@
-/* NetId(s): ..., .... Time spent: 4 hours,0 minutes.
+/* NetId(s): sw883 Time spent: 6 hours,0 minutes.
 * Name(s):
 */
 
@@ -77,14 +77,10 @@ public class Heap<V> {
     	Info new_info = new Info(v, p);
 
     	this.fixSpace();
-    	//System.out.println(size);
     	c[size] = new_info;    	 
     	valPos.put(v, (int) size);   	
     	size++;
     	bubbleUp(size - 1);
-    	
-    	
-    	//System.out.println(new_info.toString());
     }
 
     /** If size = length of c, double the length of array c.
@@ -160,12 +156,7 @@ public class Heap<V> {
         	parent = (k - 1)/2;
         	thispriority = c[k].priority;
         	parentpriority = c[parent].priority;
-<<<<<<< HEAD
         }
-=======
-
-
->>>>>>> origin/master
     }
 
     /** Return the value of this heap with lowest priority. Do not
@@ -194,9 +185,23 @@ public class Heap<V> {
         //         Note also testing procedure test40testDuplicatePriorities
         //         This method tests to make sure that when bubbling up or down,
         //         two values with the same priority are not swapped.
-
-
-        return null;
+    	if(valPos.isEmpty()){
+    		throw new NoSuchElementException("the heap is empty!");
+    	}
+    	
+        if (size == 1){
+        	size = 0;
+        	valPos.remove(c[0].value);
+        	return c[0].value;
+        }
+        
+        V temp = c[0].value;
+        swap(0, size - 1);
+        size --;
+        valPos.remove(temp);
+        //valPos.put(c[0].value, 0);
+        bubbleDown(0);
+        return temp;
     }
 
     /** Bubble c[k] down in heap until it finds the right place.
@@ -206,12 +211,37 @@ public class Heap<V> {
      *  Precondition: 0 <= k < size   and
      *                Each c[i]'s priority <= its childrens' priorities 
      *                except perhaps for c[k] */
+    
     private void bubbleDown(int k) {
         // TODO 7: Do poll (#6) and bubbleDown together. We also suggest
         //         implementing and using smallerChildOf, though you don't
         //         have to. Do not use recursion. Use iteration.
         assert 0 <= k  &&  k < size;
-
+       
+        if (2*k + 1 >= size){
+        	return;
+        }
+        
+        int parent = k;
+        int temp = smallerChildOf(parent);
+        
+        while (c[parent].priority > c[temp].priority && temp < size){
+        	swap(parent, temp);
+        	parent = temp;
+        	if (2*parent+1 < size){
+        		temp = smallerChildOf(parent);       		
+        	}
+        	else
+        		return;
+        }
+        
+        /*
+        int child = smallerChildOf(k);
+        while (child < size - 1 && c[k].priority > c[child].priority){
+        	swap(k, child);
+        	k = child;
+        	child = smallerChildOf(k);
+        }*/
 
     }
 
@@ -220,10 +250,10 @@ public class Heap<V> {
      *  Precondition: left child exists: 2n+1 < size of heap */
     protected int smallerChildOf(int n) {
         assert 2*n + 1 < size;
-        
-
-        
-        return -1;
+        int child = 2 * n + 2;
+        if (c[child - 1].priority < c[child].priority || child >= size)
+        	child --;       
+        return child;
     }
 
     /** Change the priority of value v to p.
@@ -234,8 +264,15 @@ public class Heap<V> {
         // TODO  8: When this method is correctly implemented, testing procedure
         //          test50ChangePriority() won't find errors.
         
-
-        throw new UnsupportedOperationException();
+    	if (!valPos.containsKey(v))
+    		throw new IllegalArgumentException("v is not in the heap");
+    	double oldValue = c[valPos.get(v)].priority;
+    	c[valPos.get(v)].priority = p;
+    	
+    	if (oldValue > p)
+    		bubbleUp(valPos.get(v));
+    	if(oldValue < p)
+    		bubbleDown(valPos.get(v));    	
     }
 
     /** Create and return an Info array of size n.
