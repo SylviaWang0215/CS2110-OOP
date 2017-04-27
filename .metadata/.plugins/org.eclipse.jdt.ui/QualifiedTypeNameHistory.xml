@@ -7,4 +7,5 @@
 <fullyQualifiedTypeName name="java.awt.geom.Point2D.Double"/>
 <fullyQualifiedTypeName name="java.awt.geom.Line2D.Double"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="student.PathData"/>
 </qualifiedTypeNameHistroy>

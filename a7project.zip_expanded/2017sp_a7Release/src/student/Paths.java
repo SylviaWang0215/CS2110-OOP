@@ -1,9 +1,9 @@
-/* Time spent on a7:  hh hours and mm minutes.
+/* Time spent on a7:  1 hours and 0 minutes.
 
- * Name: 
- * Netid: 
+ * Name: Shuyu Wang
+ * Netid: sw883
  * What I thought about this assignment:
- * 
+ * easy and useful!
  * 
  *
  */
@@ -28,9 +28,35 @@ public class Paths {
      * Note: The empty list is NOT "null"; it is a list with 0 elements. */
     public static List<Node> shortestPath(Node start, Node end) {
         /* TODO Read note A7 FAQs on the course piazza for ALL details. */
+    	Heap<Node> frontier = new Heap<Node>();
+    	HashMap<Node, SFdata> shortestPaths = new HashMap<Node, SFdata>();
+    	frontier.add(start, 0);
+    	shortestPaths.put(start, new SFdata(0, null));
     	
-        
-        return new LinkedList<Node>();
+    	while (frontier.size() != 0){
+    		Node current = frontier.poll();
+    		if (current.equals(end)) return constructPath(current, shortestPaths);
+    		if (current.getExitsSize() == 0) return new LinkedList<Node>();
+    		 
+    		for (Edge e: current.getExits()){
+    			Node w = e.getOther(current);
+    			int Lw = shortestPaths.get(current).distance;
+    			
+    			if (! shortestPaths.containsKey(w)){
+    				Lw = e.length + shortestPaths.get(current).distance;
+    				shortestPaths.put(w, new SFdata(Lw, current));
+    				frontier.add(w, Lw);
+    			}
+    			else{
+    				if (shortestPaths.get(w).distance > Lw + e.length){
+    					shortestPaths.replace(w, new SFdata(Lw + e.length, current));
+    					frontier.updatePriority(w, Lw + e.length);
+    				}
+    			}
+    		}
+    	}
+    	
+    	return new LinkedList<Node>();
     }
 
     /** Return the path from the start node to node end.
@@ -38,6 +64,7 @@ public class Paths {
      *  the path. */
     public static List<Node> constructPath(Node end, HashMap<Node, SFdata> nData) {
         LinkedList<Node> path= new LinkedList<Node>();
+        
         Node p= end;
         // invariant: All the nodes from p's successor to the end are in
         //            path, in reverse order.
