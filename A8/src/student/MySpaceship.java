@@ -3,6 +3,16 @@ package student;
 import models.RescueStage;
 import models.ReturnStage;
 import models.Spaceship;
+import models.NodeStatus;
+import models.Node;
+import models.Edge;
+import student.Paths;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 /** An instance implements the methods needed to complete the mission */
 public class MySpaceship extends Spaceship {
@@ -29,6 +39,28 @@ public class MySpaceship extends Spaceship {
 	@Override
 	public void rescue(RescueStage state) {
 		// TODO : Find the missing spaceship
+		
+		Heap<RescueStage> F = new Heap<RescueStage>();
+		F.add(state, 0);
+		
+		
+		while (!state.foundSpaceship()){
+			Collection<NodeStatus> s = state.neighbors();
+			double largest_dis = 0;
+			long new_id = 0;
+			for (NodeStatus temp: s){
+				double dis = temp.getPingToTarget();				
+				if (dis > largest_dis){
+					new_id = temp.getId();
+					largest_dis = dis;
+				}				
+			}
+			state.moveTo(new_id);
+				
+		}
+		return;
+		
+		
 	}
 
 	/**
@@ -37,7 +69,7 @@ public class MySpaceship extends Spaceship {
 	 * will prevent you from ever returning to Earth.
 	 *
 	 * You now have access to the entire underlying graph, which can be accessed
-	 * through ScramState. currentNode() and getEarth() will return Node objects
+	 * through ReturnState. currentNode() and getEarth() will return Node objects
 	 * of interest, and getNodes() will return a collection of all nodes in the
 	 * graph.
 	 *
@@ -55,6 +87,74 @@ public class MySpaceship extends Spaceship {
 	@Override
 	public void returnToEarth(ReturnStage state) {
 		// TODO: Return to Earth
+		//state.grabSpeedUpgrade();
+		Node start = state.currentNode();
+		Node end = state.getEarth();
+		
+		List<Node> f = new ArrayList<Node>();
+		f.add(start);
+		
+		HashMap<Node, Double> map = shortestPath(start, end);
+		
+		while (true){
+			//state.grabSpeedUpgrade();
+			double smallest_dis = Double.POSITIVE_INFINITY;
+			Node temp = null;
+			for (Edge e: start.getExits()){
+				Node w = e.getOther(start);
+				if (map.containsKey(w)){
+					double dis = map.get(w);
+					if (dis < smallest_dis & !w.isHostile()){
+						temp = w;
+					}
+				}
+				else {
+					continue;
+				}				
+			}
+			
+			state.moveTo(temp);
+			f.add(temp);
+			map.remove(temp);
+			start = temp;
+			if (temp == end)
+				return;
+		}		
 	}
+	
+	public HashMap<Node, Double> shortestPath(Node start, Node end){
+		Heap<Node> F= new Heap<Node>(); // As in lecture slides
+        HashMap<Node, Double> map= new HashMap<Node, Double>();
+
+        F.add(start, 0);
+        map.put(start, new Double(0));
+        while (F.size() != 0) {
+            Node f= F.poll();
+            if (f == end) break;
+            double fDist= map.get(f);
+            
+            for (Edge e : f.getExits()) {// for each neighbor w of f
+                Node w= e.getOther(f);
+                double newWdist= fDist + e.length;
+                if (!map.containsKey(w)){
+                	map.put(w, newWdist);
+                    F.add(w, newWdist);
+                }
+                else{
+                	double wData= map.get(w);
+                	if (newWdist < wData) {
+                        wData= newWdist;
+                        F.updatePriority(w, newWdist);
+                    }
+                }
+            }	
+        }
+        
+        return map;
+        
+	}
+        
+        
+        
 
 }
